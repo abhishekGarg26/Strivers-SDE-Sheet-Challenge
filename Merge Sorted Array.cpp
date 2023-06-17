@@ -33,8 +33,26 @@ public:
         for(int i=m;i<n+m;i++){
             nums1[i]=nums2[i-m];
         }
+
+        // int len=n+m;
+        // int gap=(len/2)+(len%2);
+        // for(int i=m;i<n+m;i++){
+        //     nums1[i]=nums2[i-m];
+        // }
+        // while(gap>0){
+        //     int left=0;
+        //     int right=left+gap;
+        //     while(right<len){
+        //         if(nums1[left]>nums1[right])
+        //             swap(nums1[left],nums1[right]);
+        //         left++,right++;
+        //     }
+        //     if(gap==1) break;
+        //     gap=(gap/2)+(gap%2);
+        // }  
     }
 };
+
 
 //when we need to get 2 arrays sorted considering them as a single sequence without using extra space     
 // TC -> O(min(n,m))+O(nlogn)+O(mlogm)
