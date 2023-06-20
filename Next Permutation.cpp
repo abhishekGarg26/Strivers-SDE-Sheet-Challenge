@@ -24,3 +24,6 @@ vector<int> nextPermutation(vector<int> &nums, int n)
         reverse(nums.begin()+ind+1,nums.end());
         return nums;
 }
+
+// Using STL
+// next_permutation(nums.begin(),nums.end());
