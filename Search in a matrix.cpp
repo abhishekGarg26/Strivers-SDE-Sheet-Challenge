@@ -43,3 +43,16 @@ public:
     return false;
     }
 };
+
+// TC->O(nlog(m))
+
+	int matSearch (vector <vector <int>> &matrix, int n, int m, int target)
+	{
+	    // your code here
+     for(int i=0;i<n;i++){
+         if(binary_search(matrix[i].begin(),matrix[i].end(),target)){
+             return true;
+         }
+     }
+         return 0;
+	}
