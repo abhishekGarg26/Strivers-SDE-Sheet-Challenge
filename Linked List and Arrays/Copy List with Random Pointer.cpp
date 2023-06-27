@@ -48,4 +48,26 @@ public:
        return dummy->next;
         
     }
+    
+    // Approach-2 (Using Hashmap)
+
+        Node* copyRandomLis(Node* head) {
+        Node* dummy=new Node(0);
+       if(!head) return NULL;
+       Node* itr=head;
+       map<Node*,Node*> mpp;
+       while(itr){
+           Node* copy=new Node(itr->val);
+           mpp[itr]=copy;
+           itr=itr->next;
+       }
+       for(auto it: mpp){
+           it.second->next=mpp[it.first->next];
+           it.second->random=mpp[it.first->random];
+       }
+
+       return mpp[head];
+        
+    }
 };
+
