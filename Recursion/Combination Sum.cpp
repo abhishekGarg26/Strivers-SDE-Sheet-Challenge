@@ -14,7 +14,6 @@ public:
     //    pick up the element
     if(arr[ind]<=target){
         ds.push_back(arr[ind]);
-        cout<<arr[ind]<<endl;
         findCombination(ind,target-arr[ind],arr,ans,ds);
         ds.pop_back();
     }
