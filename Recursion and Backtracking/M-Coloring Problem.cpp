@@ -8,7 +8,7 @@ class Solution{
 public:
     bool isSafe(int node,int color[],bool graph[101][101],int n,int col){
         for(int k=0;k<n;k++){
-            if(k!=node && graph[node][k]==1 && color[k]==col){
+            if(k!=node && graph[k][node]==1 && color[k]==col){
                 return false;
             }
         }
