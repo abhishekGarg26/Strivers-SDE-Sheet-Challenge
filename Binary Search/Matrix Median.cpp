@@ -37,7 +37,7 @@ int getMedian(vector<vector<int>> &a)
     int n=a.size();
     int m=a[0].size();
     int low=1;
-    int high=1e5;
+    int high=1e9;
     while(low<=high){
         int cnt=0;
         int mid=(low+high)>>1;
