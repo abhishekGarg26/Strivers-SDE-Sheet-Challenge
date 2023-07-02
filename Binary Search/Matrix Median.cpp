@@ -21,7 +21,7 @@ int getMedian(vector<vector<int>> &a)
 
 // Binary Search Approach
 
-int func(vector<int>&a, int m){
+int countSmallerThanEqualToMid(vector<int>&a, int m){
     int low=0;
     int high=a.size()-1;
     while(low<=high){
@@ -42,7 +42,7 @@ int getMedian(vector<vector<int>> &a)
         int cnt=0;
         int mid=(low+high)>>1;
         for(int i=0;i<n;i++){
-            cnt+=func(a[i],mid);
+            cnt+=countSmallerThanEqualToMid(a[i],mid);
         }
         if(cnt<=(n*m)/2) low=mid+1;
         else high=mid-1;
