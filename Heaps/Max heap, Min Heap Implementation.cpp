@@ -116,8 +116,8 @@ int main(){
 // Min Heap 
 
 void insert(vector<int> &arr,int value){
-    int index=arr.size();
     arr.push_back(value);
+    int index=arr.size()-1;
     while(index>0){
         int parent=(index-1)/2;
         if(arr[parent]>arr[index]){
