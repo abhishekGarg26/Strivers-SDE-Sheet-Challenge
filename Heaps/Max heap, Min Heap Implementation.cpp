@@ -149,6 +149,7 @@ void deleteFromHeap(vector<int> &arr,vector<int> &ans){
     int size=arr.size();
     ans.push_back(arr[0]);
     arr[0]=arr[size-1];
+    arr.pop_back();
     size--;
     heapify(arr,size,0);
 }
