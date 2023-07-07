@@ -31,13 +31,14 @@ public:
     }
     
     int pop() {
+      if(q1.empty()) return -1;
         int x=q1.front();
         q1.pop();
         return x;
     }
-    
+
     int top() {
-        return q1.front();
+        return q1.empty()?-1:q1.front();
     }
     
     bool empty() {
