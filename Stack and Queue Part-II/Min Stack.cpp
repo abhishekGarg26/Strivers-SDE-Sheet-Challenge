@@ -46,9 +46,9 @@ class minStack
         if(el<mini){
 			int val=mini;
             mini=2*mini-el;
-			return (int)val;
+			return val;
         }
-		return (int)el;
+		return el;
 		}
 		
 		// Function to return the top element of stack if it is present. Otherwise return -1.
@@ -57,8 +57,8 @@ class minStack
 			// Write your code here.
 		if(st.empty()) return -1;
         long long el=st.top();
-        if(el<mini) return (int)mini;
-        return (int)el;
+        if(el<mini) return mini;
+        return el;
 		}
 		
 		// Function to return minimum element of stack if it is present. Otherwise return -1.
@@ -66,6 +66,6 @@ class minStack
 		{
 			// Write your code here.
 			if(st.empty()) return -1;
-			return (int)mini;
+			return mini;
 		}
 };
