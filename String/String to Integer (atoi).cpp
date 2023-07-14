@@ -22,7 +22,6 @@ public:
        for(i=1;i<s.size();i++){
            if(isdigit(s[i])){
                ans=ans*10+((int)s[i]- (int)('0'));
-               cout<<ans<<endl;
                if(!negative && ans>maxSize) return maxSize;
                else if(negative && -ans<(-maxSize-1)) return -maxSize-1; 
            }else break;
