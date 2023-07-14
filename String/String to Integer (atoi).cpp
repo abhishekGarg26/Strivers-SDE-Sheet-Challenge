@@ -23,7 +23,7 @@ public:
            if(isdigit(s[i])){
                ans=ans*10+((int)s[i]- (int)('0'));
                if(!negative && ans>maxSize) return maxSize;
-               else if(negative && -ans<(-maxSize-1)) return -maxSize-1; 
+               else if(negative && (-ans)<(-maxSize-1)) return -maxSize-1; 
            }else break;
        }
        if(!negative) return ans;
