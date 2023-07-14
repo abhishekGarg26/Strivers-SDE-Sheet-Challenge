@@ -1,6 +1,8 @@
 #include <bits/stdc++.h> 
 using namespace std;
 
+// Approach-1
+
 string longestCommonPrefix(vector<string> &arr, int n)
 {
     // Write your code here
@@ -22,5 +24,19 @@ string longestCommonPrefix(vector<string> &arr, int n)
     }
     return ans;
 }
+
+// Approach -2 (Using Sorting)
+
+ string longestCommonPrefix(vector<string>& arr) {
+    int n=arr.size();
+    string ans="";
+    sort(arr.begin(),arr.end());  
+    for(int i=0;i<arr[0].size();i++){
+        if(arr[0][i]==arr[n-1][i])
+        ans+=ch;
+        else break;
+    }
+    return ans;
+    }
 
 
