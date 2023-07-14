@@ -33,7 +33,7 @@ string longestCommonPrefix(vector<string> &arr, int n)
     sort(arr.begin(),arr.end());  
     for(int i=0;i<arr[0].size();i++){
         if(arr[0][i]==arr[n-1][i])
-        ans+=ch;
+        ans+=arr[0][i];
         else break;
     }
     return ans;
