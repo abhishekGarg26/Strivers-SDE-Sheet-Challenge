@@ -11,7 +11,6 @@ public:
        }
        s.erase(0,i);
        if(s.empty()) return 0;
-       int maxSize= pow(2,31)-1;
        long long ans=0;
        bool negative=0;
        if(s[0]=='-') negative=1;
@@ -22,8 +21,8 @@ public:
        for(i=1;i<s.size();i++){
            if(isdigit(s[i])){
                ans=ans*10+((int)s[i]- (int)('0')); // can be done also as : s[i]-'0' or int(s[i])-int('0')
-               if(!negative && ans>maxSize) return maxSize;
-               else if(negative && (-ans)<(-maxSize-1)) return -maxSize-1; 
+               if(!negative && ans>INT_MAX) return INT_MAX;
+               else if(negative && (-ans)<INT_MIN) return INT_MIN; 
            }else break;
        }
        if(!negative) return ans;
