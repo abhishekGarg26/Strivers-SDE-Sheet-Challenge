@@ -21,7 +21,7 @@ public:
 
        for(i=1;i<s.size();i++){
            if(isdigit(s[i])){
-               ans=ans*10+((int)s[i]- (int)('0'));
+               ans=ans*10+((int)s[i]- (int)('0')); // can be done also as : s[i]-'0'
                if(!negative && ans>maxSize) return maxSize;
                else if(negative && (-ans)<(-maxSize-1)) return -maxSize-1; 
            }else break;
