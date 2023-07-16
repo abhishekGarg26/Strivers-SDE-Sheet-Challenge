@@ -23,7 +23,7 @@ public:
                 j++;
             }
             if(j==pattern.size()){
-                pos.push_back(i-j+1);
+                pos.push_back(i-j+1); //store all the indexes of matching pattern in test string
             }
             else if(test[i]!=pattern[j]){
                 if(j==0) i++;
