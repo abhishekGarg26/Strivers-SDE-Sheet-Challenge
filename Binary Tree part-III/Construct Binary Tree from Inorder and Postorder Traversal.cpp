@@ -11,13 +11,13 @@ using namespace std;
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   };
-  
+
 class Solution {
 public:
  TreeNode* buildTree(vector<int> &postorder,int postStart,int postEnd,vector<int> &inorder,int inStart,int inEnd,map<int,int> mp){
         if(postStart > postEnd || inStart > inEnd) return NULL;
         TreeNode* root=new TreeNode(postorder[postEnd]);
-        int inRoot=mp[root->val];
+        int inRoot=mp[root->val]; // inRoot=find(inorder.begin(),inorder.end(),root->val)-inorder.begin();
         int numsLeft=inRoot-inStart;
         root->left=buildTree(postorder,postStart,postStart+numsLeft-1,inorder,inStart,inRoot-1,mp);
         root->right=buildTree(postorder,postStart+numsLeft,postEnd-1,inorder,inRoot+1,inEnd,mp);
