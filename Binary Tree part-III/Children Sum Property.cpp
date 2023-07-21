@@ -17,6 +17,8 @@ class BinaryTreeNode
         }
     };
 
+// Program to maintain child property
+
 void changeTree(BinaryTreeNode < int > * root) {
     // Write your code here.
     if(!root) return;
@@ -35,3 +37,21 @@ void changeTree(BinaryTreeNode < int > * root) {
     if(root->right) tot+=root->right->data;
     if(root->left || root->right) root->data=tot;
 }  
+
+// Program to check child property
+
+bool isParentSum(BinaryTreeNode < int > *root){
+    // Write your code here.
+    if(!root) return true;
+    bool left=isParentSum(root->left);
+    if(!left) return false;
+    bool right=isParentSum(root->right);
+    if(!right) return false;
+    if(root->left || root->right){
+        int sum=0;
+        if(root->left) sum+=root->left->data;
+        if(root->right) sum+=root->right->data;
+        return root->data==sum;
+    }
+    return true;
+}
