@@ -1,3 +1,8 @@
+#include <bits/stdc++.h> 
+
+using namespace std;
+
+template <typename T>
 class BinaryTreeNode
     {
     public :
@@ -11,7 +16,7 @@ class BinaryTreeNode
             right = NULL;
         }
     };
-    
+
 void changeTree(BinaryTreeNode < int > * root) {
     // Write your code here.
     if(!root) return;
