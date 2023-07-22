@@ -1,57 +1,61 @@
 #include <bits/stdc++.h> 
 
 using namespace std;
+template <typename T>
 
-struct Node
-{
-	int key;
-	struct Node *left;
-	struct Node *right;
-	
-	Node(int x){
-	    key = x;
-	    left = NULL;
-	    right = NULL;
-	}
-};
+    class BinaryTreeNode
+    {
+    public :
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
 
-class Solution
-{
-    public:
-    Node* inorderSuccessor(Node* root,int key){
-        if(!root) return NULL;
-        Node* cur=root;
-        Node* successor=NULL;
-        while(cur){
-            if(cur->key <= key){
-                cur=cur->right;
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~BinaryTreeNode() {
+            if (left)
+            {
+                delete left;
+            }
+            if (right)
+            {
+                delete right;
+            }
+        }
+    };
+
+BinaryTreeNode<int>* inorderSuccessor(BinaryTreeNode<int>* root,int key){
+        BinaryTreeNode<int>* successor=NULL;
+        while(root){
+            if(root->data <= key){
+                root=root->right;
             }else{
-                successor=cur;
-                cur=cur->left;
+                successor=root;
+                root=root->left;
             }
         }
         return successor;
     }
-    Node* inorderPredecessor(Node* root,int key){
-        if(!root) return NULL;
-        Node* cur=root;
-        Node* predecessor = NULL;
-        while(cur){
-            if(cur->key >= key){
-                cur=cur->left;
+    BinaryTreeNode<int>* inorderPredecessor(BinaryTreeNode<int>* root,int key){
+        BinaryTreeNode<int>* predecessor = NULL;
+        while(root){
+            if(root->data >= key){
+                root=root->left;
             }else{
-                predecessor=cur;
-                cur=cur->right;
+                predecessor=root;
+                root=root->right;
             }
         }
         return predecessor;
     }
-    void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
-    {
-        // Your code goes here
-        suc=inorderSuccessor(root,key);
-        pre=inorderPredecessor(root,key);
-        return;
-
-    }
-};
+pair<int,int> predecessorSuccessor(BinaryTreeNode<int>* root, int key)
+{
+    // Write your code here.
+        BinaryTreeNode<int>* suc=inorderSuccessor(root,key);
+        BinaryTreeNode<int>* pre=inorderPredecessor(root,key);
+        return {pre ? pre->data : -1, suc ? suc->data : -1};
+}
