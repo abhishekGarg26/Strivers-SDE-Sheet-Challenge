@@ -13,7 +13,7 @@ struct Node {
     }
 };
 
-// Approach-1
+// Approach-1 ( Using reverse inorder traversal )(TC->O(min(k,n)) ,  SC->O(min(k,n)))
 class Solution
 {
     public:
@@ -33,7 +33,7 @@ class Solution
     }
 };
 
-// Approach-2
+// Approach-2 (Using Morris Traversal) (TC->O(n) , SC->O(1))
 class Solution
 {
     public:
