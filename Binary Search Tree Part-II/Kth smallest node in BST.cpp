@@ -11,7 +11,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   };
 
-// Approach-1 (Using simple inorder traversal)
+// Approach-1 (Using simple inorder traversal) (TC->O(min(k,n)) ,  SC->O(min(k,n)))
 
  class Solution {
 public:
@@ -29,7 +29,7 @@ public:
     }
 };
 
-// Approach-2 (Using Morris Inorder Traversal)
+// Approach-2 (Using Morris Inorder Traversal) (TC->O(n) , SC->O(1))
 
 class Solution {
 public:
