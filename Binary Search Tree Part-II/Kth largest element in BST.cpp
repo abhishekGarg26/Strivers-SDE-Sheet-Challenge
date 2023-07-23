@@ -12,6 +12,28 @@ struct Node {
         left = right = NULL;
     }
 };
+
+// Approach-1
+class Solution
+{
+    public:
+     int reverseInorder(Node* root,int &k){
+        if(!root) return 0;
+        int right= reverseInorder(root->right,k);
+        if(root->left || root->right || (!root->left && !root->right)) k--;
+        if(k==0) return root->data;
+        int left= reverseInorder(root->left,k);
+        return right ? right : left;
+    }
+    int kthLargest(Node *root, int k)
+    {
+        //Your code here
+        return reverseInorder(root,k);
+
+    }
+};
+
+// Approach-2
 class Solution
 {
     public:
