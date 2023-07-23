@@ -13,18 +13,21 @@ struct TreeNode {
 
 // Approach-1 (Using simple inorder traversal)
 
- int inorder(TreeNode* root,int &cnt,int k){
+ class Solution {
+public:
+     int inorder(TreeNode* root,int &k){
         if(!root) return 0;
-        int left= inorder(root->left,cnt,k);
-        cnt++;
-        if(cnt==k) return root->val;
-        int right= inorder(root->right,cnt,k);
+        int left= inorder(root->left,k);
+        if(root->left || root->right || (!root->left && !root->right)) k--;
+        if(k==0) return root->val;
+        int right= inorder(root->right,k);
         return left ? left : right;
     }
     int kthSmallest(TreeNode* root, int k) {
         int cnt=0;
-        return inorder(root,cnt,k);
+        return inorder(root,k);
     }
+};
 
 // Approach-2 (Using Morris Inorder Traversal)
 
