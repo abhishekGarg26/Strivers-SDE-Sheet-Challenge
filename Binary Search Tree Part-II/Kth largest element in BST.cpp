@@ -13,7 +13,27 @@ struct Node {
     }
 };
 
-// Approach-1 ( Using reverse inorder traversal )(TC->O(min(k,n)) ,  SC->O(min(k,n)))
+// Approach-1 (Using extra space) (TC->O(n) , SC->O(n))
+
+class Solution
+{
+    public:
+    void inorder(Node* root,vector<int> &a){
+        if(!root) return;
+        inorder(root->left,a);
+        a.push_back(root->data);
+        inorder(root->right,a);
+    }
+    int kthLargest(Node *root, int K)
+    {
+        //Your code here
+        vector<int> a;
+        inorder(root,a);
+        return a[a.size()-K];
+    }
+};
+
+// Approach-2 ( Using reverse inorder traversal )(TC->O(min(n-k,n)) ,  SC->O(min(n-k,n)))
 class Solution
 {
     public:
@@ -33,7 +53,7 @@ class Solution
     }
 };
 
-// Approach-2 (Using Morris Traversal) (TC->O(n) , SC->O(1))
+// Approach-3 (Using Morris Traversal) (TC->O(n) , SC->O(1))
 class Solution
 {
     public:
