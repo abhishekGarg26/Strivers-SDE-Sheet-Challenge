@@ -11,7 +11,24 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   };
 
-// Approach-1 (Using simple inorder traversal) (TC->O(min(k,n)) ,  SC->O(min(k,n)))
+// Approach-1 (Using extra space) (TC->O(n) , SC->O(n))
+
+class Solution {
+public:
+    void inorder(TreeNode* root,vector<int> &a){
+        if(!root) return;
+        inorder(root->left,a);
+        a.push_back(root->val);
+        inorder(root->right,a);
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        vector<int> a;
+        inorder(root,a);
+        return a[k-1];
+    }
+};
+
+// Approach-2 (Using simple inorder traversal) (TC->O(min(k,n)) ,  SC->O(min(k,n)))
 
  class Solution {
 public:
@@ -29,7 +46,7 @@ public:
     }
 };
 
-// Approach-2 (Using Morris Inorder Traversal) (TC->O(n) , SC->O(1))
+// Approach-3 (Using Morris Inorder Traversal) (TC->O(n) , SC->O(1))
 
 class Solution {
 public:
