@@ -34,19 +34,24 @@ class NodeValue{
             this->maxSize=maxSize;
         }
 };
-NodeValue maxSumBSTHelp(TreeNode<int>* root){
+NodeValue maxSizeBSTHelper(TreeNode<int>* root){
+    // An empty tree is a BST of size 0
     if(!root) return NodeValue(INT_MAX,INT_MIN,0);
-    auto left=maxSumBSTHelp(root->left);
-    auto right=maxSumBSTHelp(root->right);
+    // Get values from left & right subtree of current tree
+    auto left=maxSizeBSTHelper(root->left);
+    auto right=maxSizeBSTHelper(root->right);
+    // If current node is greater than max in the left & smaller then min in the right, then it is a valid BST
     if(left.maxNode < root->data && root->data < right.minNode){
+        // It is a BST
         return NodeValue(min(root->data,left.minNode),max(root->data,right.maxNode),left.maxSize+right.maxSize+1);
     }
+    // Otherwise return [-inf,inf] so that parent can't be a valid BST
     return NodeValue(INT_MIN,INT_MAX,max(left.maxSize,right.maxSize));
 }
 int largestBST(TreeNode<int>* root) 
 {
     // Write your code here.
-    return maxSumBSTHelp(root).maxSize;
+    return maxSizeBSTHelper(root).maxSize;
 }
 
 // Soln - Maximum Sum BST in Binary Tree (Leetcode)
