@@ -22,15 +22,15 @@ BinaryTreeNode<int>* BTtoDLL(BinaryTreeNode<int>* root) {
     // Write your code here
         BinaryTreeNode<int>* cur=root;
         BinaryTreeNode<int>* newRoot=NULL;
-        BinaryTreeNode<int>* backTrack=root;
+        BinaryTreeNode<int>* lastVisited=root;
         while(cur!=NULL){
             if(cur->left==NULL){
                 if(!newRoot) newRoot=cur;
                 else{
-                    backTrack->right=cur;
-                    cur->left=backTrack;
+                    lastVisited->right=cur;
+                    cur->left=lastVisited;
                 }
-                backTrack=cur;
+                lastVisited=cur;
                 cur=cur->right;
             }else{
                 BinaryTreeNode<int>* prev=cur->left;
@@ -42,7 +42,7 @@ BinaryTreeNode<int>* BTtoDLL(BinaryTreeNode<int>* root) {
                     cur=cur->left;
                 }else{
                     cur->left=prev;
-                    backTrack=cur;
+                    lastVisited=cur;
                     cur=cur->right;
                 }
             }
