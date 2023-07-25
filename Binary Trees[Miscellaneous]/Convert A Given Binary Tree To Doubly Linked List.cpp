@@ -49,3 +49,27 @@ BinaryTreeNode<int>* BTtoDLL(BinaryTreeNode<int>* root) {
         }
         return newRoot;
 }
+
+
+// Approach-2 (Using Recursion)
+
+void recursion(BinaryTreeNode<int>* root,BinaryTreeNode<int>* &prev,BinaryTreeNode<int>* &head){
+    if(!root) return;
+    recursion(root->left,prev,head);
+    if(prev==NULL) head=root;
+    else{
+        root->left=prev;
+        prev->right=root;
+    }
+    prev=root;
+    recursion(root->right,prev,head);
+ }
+
+BinaryTreeNode<int>* BTtoDLL(BinaryTreeNode<int>* root) {
+    // Write your code here
+    BinaryTreeNode<int> *prev=NULL; 
+    BinaryTreeNode<int> *head=NULL; 
+    recursion(root,prev,head);
+    return head;
+    
+}
