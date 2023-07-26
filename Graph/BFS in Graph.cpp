@@ -14,7 +14,7 @@ void BFS(int start,int vis[],vector<int> &ans,vector<int> adj[]){
                 if(!vis[it]){
                     vis[it]=1;
                     q.push(it);
-                }
+                    }
                 }
             
         }
