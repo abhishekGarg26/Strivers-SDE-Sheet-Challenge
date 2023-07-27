@@ -38,11 +38,11 @@ private:
         int delRow[]={-1,0,1,0,-1,1,1,-1};
         int delCol[]={0,1,0,-1,1,1,-1,-1};
         for(int it=0;it<8;it++){
-                int newRow=i+delRow[it];
-                int newCol=j+delCol[it];
-                if(newRow>=0 && newRow<tRow && newCol>=0 && newCol<tCol && !vis[newRow][newCol] && grid[newRow][newCol]=='1'){
-                    vis[newRow][newCol]=1;
-                    dfs(newRow,newCol,vis,grid,tRow,tCol);
+            int newRow=i+delRow[it];
+            int newCol=j+delCol[it];
+            if(newRow>=0 && newRow<tRow && newCol>=0 && newCol<tCol && !vis[newRow][newCol] && grid[newRow][newCol]=='1'){
+                vis[newRow][newCol]=1;
+                dfs(newRow,newCol,vis,grid,tRow,tCol);
             }
         }
     }
@@ -59,6 +59,7 @@ private:
                 if(!vis[i][j] && grid[i][j]=='1'){
                     cnt++;
                     bfs(i,j,vis,grid);
+                    // dfs(i,j,vis,grid,m,n);
                 }
             }
         }
