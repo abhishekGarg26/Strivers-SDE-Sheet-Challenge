@@ -40,6 +40,9 @@ int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
 
 // Approach -2 (Using only single vis array)
 
+// Is it is visited in path then it is marked as 1 otherwise if returns false 
+// then mark it 2 so that we will not check it again in some other path & directly return false.
+
 bool dfs(int node,int vis[],vector<int> adj[]){
   vis[node]=1;
   for(auto adjacentNode: adj[node]){
