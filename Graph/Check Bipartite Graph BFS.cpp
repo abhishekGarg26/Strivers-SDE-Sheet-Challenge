@@ -9,10 +9,12 @@ bool bfs(int node,int color[],vector<int> adj[]){
 		int parent=q.front();
 		q.pop();
 		for(auto it: adj[parent]){
+			// If the adjacent node is not colored you will give the opposite color of the node
 			if(color[it]==-1){
 				color[it]=!color[parent];
 				q.push(it);
 			}
+			// If the adjacent guy has same color someone did color it on some other path
 			else if(color[it]==color[parent]) return false;
 		}
 	}
