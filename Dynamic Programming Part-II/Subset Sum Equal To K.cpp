@@ -1,4 +1,6 @@
 #include <bits/stdc++.h> 
+using namespace std;
+
 bool subsetSumToK(int n, int k, vector<int> &arr) {
     // Write your code here.
     vector<bool> prev(k+1,false);
