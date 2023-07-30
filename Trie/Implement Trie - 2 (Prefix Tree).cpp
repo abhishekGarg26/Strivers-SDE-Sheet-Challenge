@@ -1,82 +1,103 @@
 #include <bits/stdc++.h> 
 using namespace std;
 
-/*class TrieNode {                        //Definition of TrieNode class
-public:
-    TrieNode * children[26];
-    bool isEnd;
-    TrieNode()
-    {
-        isEnd=false;
-        for(int i=0;i<26;i++)
-            children[i]=NULL;
-    }
+struct Node {
+  Node * links[26];
+  int cntEndWith = 0;
+  int cntPrefix = 0;
 
-};*/
-class TrieNode{
-    public:
-    char data;
-    TrieNode* children[26];
-    int childCount;
-    bool isTerminal;
-    TrieNode(char ch){
-        data=ch;
-        for(int i=0;i<26;i++){
-            children[i]=NULL;
-        }
-        childCount=0;
-        isTerminal=false;
-    }
+  bool containsKey(char ch) {
+    return (links[ch - 'a'] != NULL);
+  }
+  Node * get(char ch) {
+    return links[ch - 'a'];
+  }
+  void put(char ch, Node * node) {
+    links[ch - 'a'] = node;
+  }
+  void increaseEnd() {
+    cntEndWith++;
+  }
+  void increasePrefix() {
+    cntPrefix++;
+  }
+  void deleteEnd() {
+    cntEndWith--;
+  }
+  void reducePrefix() {
+    cntPrefix--;
+  }
+  int getEnd() {
+    return cntEndWith;
+  }
+  int getPrefix() {
+    return cntPrefix;
+  }
 };
 class Trie{
+    private:
+        Node * root;
     public:
-        TrieNode* root;
-        Trie(char ch){
-            root=new TrieNode(ch);
-        }
-        
-        void insertUtil(TrieNode* root,string word){
-            if(word.length()==0){
-                root->isTerminal=true;
-                return;
-            }
-            int index=word[0]-'a';
-            TrieNode* child;
-            if(root->children[index]!=NULL){
-                child=root->children[index];
-            }
-            else{
-                child=new TrieNode(word[0]);
-                root->childCount++;
-                root->children[index]=child;
-            }
-            insertUtil(child,word.substr(1));
-        }
-        
-        void insertWord(string word){
-            insertUtil(root,word);
-        }
-        void lcp(string str,string &ans){
-            for(int i=0;i<str.length();i++){
-                char ch=str[i];
-                if(root->childCount==1){
-                    ans.push_back(ch);
-                    int index=ch-'a';
-                    root=root->children[index];
-                }else break;
-                if(root->isTerminal) break;
-            }
-        }
-};
-TrieNode* solution::deleteWord(TrieNode* root, string word) {
-  // Write your code here
-    Trie *t=new Trie('\0');
-    for(int i=0;i<n;i++){
-        t->insertWord(arr[i]);
-    }
-    string first=arr[0];
-    string ans="";
-    t->lcp(first,ans);
-    return ans;
-}
 
+    Trie(){
+        // Write your code here.
+        root = new Node();
+    }
+
+    void insert(string &word){
+        // Write your code here.
+        Node * node = root;
+        for (int i = 0; i < word.length(); i++) {
+        if (!node -> containsKey(word[i])) {
+            node -> put(word[i], new Node());
+        }
+        node = node -> get(word[i]);
+        node -> increasePrefix();
+        }
+        node -> increaseEnd();
+    }
+
+    int countWordsEqualTo(string &word){
+        // Write your code here.
+        Node *node = root;
+        for (int i = 0; i < word.length(); i++)
+        {
+            if (node->containsKey(word[i]))
+            {
+                node = node->get(word[i]);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        return node->getEnd();
+    }
+
+    int countWordsStartingWith(string &word){
+        // Write your code here.
+        Node * node = root;
+        for (int i = 0; i < word.length(); i++) {
+        if (node -> containsKey(word[i])) {
+            node = node -> get(word[i]);
+        } else {
+            return 0;
+        }
+        }
+        return node -> getPrefix();
+    }
+
+    void erase(string &word){
+        // Write your code here.
+         Node * node = root;
+        for (int i = 0; i < word.length(); i++) {
+        if (node -> containsKey(word[i])) {
+            node = node -> get(word[i]);
+            node -> reducePrefix();
+        } else {
+            return;
+        }
+        }
+        node -> deleteEnd();
+    }
+};
