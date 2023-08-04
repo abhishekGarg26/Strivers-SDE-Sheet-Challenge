@@ -1,37 +1,58 @@
 #include <bits/stdc++.h> 
 using namespace std;
 
-vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source) {
-    unordered_map<int,list<pair<int,int>>> adj;
-    for(int i=0;i<edges;i++){
-        int u=vec[i][0];
-        int v=vec[i][1];
-        int w=vec[i][2];
-        adj[u].push_back({v,w});
-        adj[v].push_back({u,w});
-    }
-    vector<int> dist(vertices);
-    for(int i=0;i<vertices;i++){
-        dist[i]=INT_MAX;
-    }
-    set<pair<int,int>> st;
-    dist[source]=0;
-    st.insert({0,source});
-    while(!st.empty()){
-        auto top=*(st.begin());
-        int nodeDistance=top.first;
-        int topNode=top.second;
-        st.erase(st.begin());
-        for(auto neighbour:adj[topNode]){
-            if(nodeDistance+neighbour.second<dist[neighbour.first]){
-                auto record=st.find({dist[neighbour.first],neighbour.first});
-                if(record!=st.end()){
-                    st.erase(record);
-                }
-                dist[neighbour.first]=nodeDistance+neighbour.second;
-                st.insert({dist[neighbour.first],neighbour.first});
+// Approach-1 (Using Min-Heap)
+
+vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+{
+    // Code here
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+    vector<int> dist(V);
+    for(int i=0;i<V;i++) dist[i]=1e9;
+    dist[S]=0;
+    pq.push({0,S});
+    while(!pq.empty()){
+        int dis=pq.top().first;
+        int node=pq.top().second;
+        pq.pop();
+        for(auto it: adj[node]){
+            int edgeWeight=it[1];
+            int adjNode=it[0];
+            if(dis+edgeWeight < dist[adjNode]){
+                dist[adjNode]=dis+edgeWeight;
+                pq.push({dist[adjNode],adjNode});
             }
         }
     }
     return dist;
 }
+
+// Approach-2 (Using Set) 
+
+ vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+        // Code here
+        vector<int> dist(V,1e9);
+        dist[S]=0;
+        set<pair<int,int>> st;
+        st.insert({0,S});
+        while(!st.empty()){
+            auto it=*(st.begin());
+            int dis=it.first;
+            int node=it.second;
+            st.erase(it);
+            for(auto it : adj[node]){
+                int adjNode=it[0];
+                int edgeW=it[1];
+                if(dis+edgeW < dist[adjNode]){
+                    // erase if it existed
+                    if(dist[adjNode]!=1e9) st.erase({dist[adjNode],adjNode});
+                    dist[adjNode]=dis+edgeW;
+                    st.insert({dist[adjNode],adjNode});
+                }
+                
+            }
+        }
+        return dist;
+        
+    }
