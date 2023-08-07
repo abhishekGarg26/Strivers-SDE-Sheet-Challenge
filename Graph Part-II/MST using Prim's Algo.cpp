@@ -49,7 +49,7 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int V, int m, vector<pair<pa
         }
         priority_queue<pair<int,pair<int,int>>,
         vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>> pq;
-        pq.push({1,{1,-1}});
+        pq.push({0,{1,-1}});
         int sum=0;
         // MST storing {{parent,node},weight}
         vector<pair<pair<int,int>,int>> mst;
