@@ -1,58 +1,78 @@
 #include <bits/stdc++.h> 
 using namespace std;
 
-class trieNode{
-    public:
-   trieNode *child[26];
-   bool isEnding;
-    trieNode(){
-        this->isEnding=false;
-        for(int i=0;i<26;i++){
-            this->child[i]=NULL;
-        }
+#include <bits/stdc++.h> 
+struct Node{
+    Node *links[26];
+    bool flag=false;
+    
+    bool containsKey(char ch){
+        return links[ch-'a']!=NULL;
+    }
+    
+    Node* get(char ch){
+        return links[ch-'a'];
+    }
+    
+    void put(char ch,Node* node){
+        links[ch-'a']=node;
+    }
+    
+    void setEnd(){
+        flag=true;
+    }
+    bool isEnd(){
+        return flag;
     }
 };
-void insert(trieNode *root,string str){
-    int len=str.length();
-    trieNode *pCrawl=root;
-    for(int level=0;level<len;level++){
-        int index=str[level]-'a';
-        if(!pCrawl->child[index])
-            pCrawl->child[index]=new trieNode();
-            pCrawl=pCrawl->child[index];
-    }
-    pCrawl->isEnding=true;
-}
-bool allPrefixed(trieNode *root,string word){
-    trieNode *pCrawl=root;
-    for(char c:word){
-        int i=c-'a';
-        pCrawl=pCrawl->child[i];
-        if(pCrawl==NULL || pCrawl->isEnding==false){
-            return false;
+class Trie{
+    private: 
+        Node* root;
+    public:
+        Trie(){
+            root=new Node();
         }
-    }
-    return true;
-}
+        void insert(string word){
+            Node* node=root;
+            for(int i=0;i<word.size();i++){
+                if(!node->containsKey(word[i])){
+                    node->put(word[i],new Node());
+                }
+                node=node->get(word[i]);
+            }
+            node->setEnd();
+        }
+        bool checkIfPrefixExists(string word){
+            bool flag=true;
+            Node* node=root;
+            for(int i=0;i<word.size() && flag; i++){
+                if(node->containsKey(word[i])){
+                    node=node->get(word[i]);
+                    flag= flag & node->isEnd();
+                }
+                else return false;
+            }
+            return flag;
+        }
+};
+
 string completeString(int n, vector<string> &a){
     // Write your code here.
-    string ans="";
-    trieNode *root=new trieNode();
-    for(string word:a){
-        insert(root,word);
+    Trie trie;
+    for(auto &it: a){
+        trie.insert(it);
     }
-    for(string word:a){
-        if(!allPrefixed(root,word))
-        continue;
-        if(ans.size()<word.size()){
-            ans=word;
+    string longest="";
+    for(auto &it: a){
+        if(trie.checkIfPrefixExists(it)){
+            if(it.length()>longest.length()){
+                longest=it;
+            }
+            else if(it.length()==longest.length() && it<longest){
+                longest=it;
+            }
         }
-        else if(ans.size()==word.size() && word<ans){
-            ans=word;
-        }
     }
-    if(ans.size()==0){
-        ans="None";
-    }
-    return ans;
+    if(longest=="") return "None";
+    return longest;
 }
