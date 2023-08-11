@@ -1,71 +1,72 @@
 #include <bits/stdc++.h> 
 using namespace std;
-
-class TrieNode{
-    public:
-    char data;
-    TrieNode* children[26];
-    int childCount;
-    bool isTerminal;
-    TrieNode(char ch){
-        data=ch;
-        for(int i=0;i<26;i++){
-            children[i]=NULL;
-        }
-        childCount=0;
-        isTerminal=false;
+struct Node{
+    Node *links[26];
+    int childCount=0;
+    bool flag=false;
+    
+    bool containsKey(char ch){
+        return (links[ch-'a']!=NULL);
+    }
+    
+    Node* get(char ch){
+        return links[ch-'a'];
+    }
+    
+    void put(char ch,Node* node){
+        links[ch-'a']=node;
+        childCount++;
+    }
+    
+    void setEnd(){
+        flag=true;
+    }
+    bool isEnd(){
+        return flag;
     }
 };
 class Trie{
+    private: 
+        Node* root;
     public:
-        TrieNode* root;
-        Trie(char ch){
-            root=new TrieNode(ch);
+        Trie(){
+            root=new Node();
+        }
+        void insert(string word){
+            Node* node=root;
+            for(int i=0;i<word.size();i++){
+                if(!node->containsKey(word[i])){
+                    node->put(word[i],new Node());
+                }
+                node=node->get(word[i]);
+            }
+            node->setEnd();
+        }
+        // checking count of each node's value that do not have null links
+        // if the count is greater than one, then break and ans stores lcp
+        void lcp(string word,string &ans){
+            Node* node=root;
+            for(int i=0;i<word.size();i++){
+                if(node->childCount==1){
+                    ans+=word[i];
+                    node=node->get(word[i]);
+                }else{
+                    break;
+                }
+            }
         }
         
-        void insertUtil(TrieNode* root,string word){
-            if(word.length()==0){
-                root->isTerminal=true;
-                return;
-            }
-            int index=word[0]-'a';
-            TrieNode* child;
-            if(root->children[index]!=NULL){
-                child=root->children[index];
-            }
-            else{
-                child=new TrieNode(word[0]);
-                root->childCount++;
-                root->children[index]=child;
-            }
-            insertUtil(child,word.substr(1));
-        }
-        
-        void insertWord(string word){
-            insertUtil(root,word);
-        }
-        void lcp(string str,string &ans){
-            for(int i=0;i<str.length();i++){
-                char ch=str[i];
-                if(root->childCount==1){
-                    ans.push_back(ch);
-                    int index=ch-'a';
-                    root=root->children[index];
-                }else break;
-                if(root->isTerminal) break;
-            }
-        }
 };
-string longestCommonPrefix(vector<string> &arr, int n)
+// TC-> O(m*n), SC->(m*n) [space complexity is very high for worst case when all words and their chars are unique]
+string longestCommonPrefix(vector<string> &a, int n)
 {
     // Write your code here
-    Trie *t=new Trie('\0');
-    for(int i=0;i<n;i++){
-        t->insertWord(arr[i]);
+    Trie trie;
+    for(auto &it: a){
+        trie.insert(it);
     }
-    string first=arr[0];
     string ans="";
-    t->lcp(first,ans);
+    trie.lcp(a[0],ans);
     return ans;
 }
 
