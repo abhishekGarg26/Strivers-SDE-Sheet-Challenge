@@ -66,7 +66,7 @@ public:
         int ind=0;
         int n=nums.size();
         Trie trie;
-        // O(q*34 + n*34)
+        // O(q*32 + n*32)
         for(int i=0;i<q;i++){
             int ai= oQ[i].first;
             int xi= oQ[i].second.first;
