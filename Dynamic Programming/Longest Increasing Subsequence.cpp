@@ -34,6 +34,7 @@ public:
     }
 };
 
+// Approach - 3 (Using Tabulation and Memoization)
 // Space Optimisation by not using auxiliary space of recursion -> O(N^2)
 
 int lengthOfLIS(vector<int>& nums) {
@@ -69,7 +70,7 @@ int longestIncreasingSubsequence(int nums[], int n)
 
 }
 
-// Approach - (Using Tabulation)
+// Approach - 4 (Using Tabulation in different algorithmic way)
 
 int lengthOfLIS(vector<int>& nums) {
         int n=nums.size();
@@ -86,7 +87,7 @@ int lengthOfLIS(vector<int>& nums) {
         return maxi;
     }
 
-// Printing LIS using Tabulation
+// Printing LIS using Tabulation with algorithmic approach.
 
 int lengthOfLIS(vector<int>& nums) {
         int n=nums.size();
@@ -120,7 +121,7 @@ int lengthOfLIS(vector<int>& nums) {
         return maxi;
     }
 
-// Approach (Using Binary Search)
+// Approach - 5 (Using Binary Search)
 
 	int lengthOfLIS(vector<int>& nums) {
         int n=nums.size();
