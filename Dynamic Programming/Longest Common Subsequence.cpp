@@ -55,6 +55,30 @@ int longestCommonSubsequence(string text1, string text2) {
                 else dp[ind1][ind2]=max(dp[ind1-1][ind2],dp[ind1][ind2-1]);
             }
         }
+
+        // To print LCS as well we can do below steps
+
+        int len=dp[n][m];
+        string ans="";
+        for(int i=0;i<len;i++) ans+='$';
+        int i=n, j=m, index=len-1;
+        // O(n+m) at worst case
+        while(i>0 && j>0){
+            if(text1[i-1]==text2[j-1]){
+                ans[index]=text1[i-1];
+                index--;
+                i--,j--;
+            }
+            else if(dp[i-1][j] > dp[i][j-1]){
+                i=i-1;
+            }else{
+                j=j-1;
+            }
+        }
+        // Printing the lcs
+        cout<<ans;
+
+        // returning length of lcs
         return dp[n][m];
 }
 
@@ -75,3 +99,4 @@ int longestCommonSubsequence(string text1, string text2) {
         }
         return prev[m];
 }
+
