@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Approach-1 (Using Recursion)
 class Solution
 {
     public:
@@ -24,6 +25,7 @@ class Solution
     }
 };
 
+// Approach-2 (Using DP)
 class Solution
 {
     public:
@@ -49,7 +51,7 @@ class Solution
     }
 };
 
-
+// Approach-3 (Using Tabulation with 2-D vector)
 class Solution
 {
     public:
@@ -73,7 +75,7 @@ class Solution
     }
 };
 
-
+// Approach-3 (Tabulation using 1-D Arrays)
 
 class Solution
 {
@@ -99,7 +101,7 @@ class Solution
     }
 };
 
-// Single Array Space optimisation
+// Approach-4 (Tabulation with single array space optimisation)
 class Solution
 {
     public:
