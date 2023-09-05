@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Que 1 -> Coin Change
+
 // Approach-1 (Using Recursion)
 class Solution {
 public:
@@ -95,3 +97,86 @@ public:
         return ans;
     }
 };
+
+// Que 2 -> Ways To Make Coin Change
+
+// Approach-1 (Using Recursion)
+
+long f(int ind,int T, int *a){
+    if(ind==0){
+        return (T%a[0]==0);
+    }
+    long notTake = f(ind-1,T,a);
+    long Take=0;
+    if(a[ind]<=T) Take=f(ind,T-a[ind],a);
+    return notTake+Take;
+}
+long countWaysToMakeChange(int *arr, int n, int T)
+{
+    //Write your code here
+    return f(n-1,T,arr);
+   
+}
+
+// Approach-2 (Using DP)
+
+long f(int ind,int T, int *a, vector<vector<long>> &dp){
+    if(ind==0){
+        return (T%a[0]==0);
+    }
+    if(dp[ind][T]!=-1) return dp[ind][T];
+    long notTake = f(ind-1,T,a,dp);
+    long Take=0;
+    if(a[ind]<=T) Take=f(ind,T-a[ind],a,dp);
+    return dp[ind][T]=notTake+Take;
+}
+long countWaysToMakeChange(int *arr, int n, int T)
+{
+    //Write your code here
+    vector<vector<long>> dp(n,vector<long>(T+1,-1));
+    return f(n-1,T,arr,dp);
+   
+}
+
+// Approach-3 (Using Tabulation)
+
+long countWaysToMakeChange(int *arr, int n, int target)
+{
+    //Write your code here
+    vector<vector<long>> dp(n,vector<long>(target+1,0));
+    for(int T=0;T<=target;T++){
+        dp[0][T]= (T%arr[0]==0);
+    }
+    for(int ind=1;ind<n;ind++){
+        for(int T=0;T<=target;T++){
+            long notTake = dp[ind-1][T];
+            long Take=0;
+            if(arr[ind]<=T) Take=dp[ind][T-arr[ind]];
+            dp[ind][T]=notTake+Take;
+        }
+    }
+    return dp[n-1][target];
+   
+}
+
+// Approach-4 (Space optimisation in Tabulation)
+
+long countWaysToMakeChange(int *arr, int n, int target)
+{
+    //Write your code here
+    vector<long> prev(target+1,0), cur(target+1,0);
+    for(int T=0;T<=target;T++){
+        prev[T]= (T%arr[0]==0);
+    }
+    for(int ind=1;ind<n;ind++){
+        for(int T=0;T<=target;T++){
+            long notTake = prev[T];
+            long Take=0;
+            if(arr[ind]<=T) Take=cur[T-arr[ind]];
+            cur[T]=notTake+Take;
+        }
+        prev=cur;
+    }
+    return prev[target];
+   
+}
