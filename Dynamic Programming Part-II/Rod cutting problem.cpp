@@ -1,46 +1,104 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int cutRodUtil(vector<int>& price, int ind, int N, vector<vector<int>>& dp){
+// Approach-1 (Using Recursion)
 
-    if(ind == 0){
-        return N*price[0];
+int f(int ind, int N, vector<int> &prices){
+    if(ind==0){
+        return N*prices[0];
     }
-    
-    if(dp[ind][N]!=-1)
-        return dp[ind][N];
-        
-    int notTaken = 0 + cutRodUtil(price,ind-1,N,dp);
-    
-    int taken = INT_MIN;
+    int notTake = 0 + f(ind-1,N,prices);
+    int Take = INT_MIN;
     int rodLength = ind+1;
-    if(rodLength <= N)
-        taken = price[ind] + cutRodUtil(price,ind,N-rodLength,dp);
-        
-    return dp[ind][N] = max(notTaken,taken);
+    if(rodLength <= N) Take = prices[ind] + f(ind,N-rodLength,prices);
+    return max(notTake,Take);
 }
-int cutRod(vector<int> &price, int N)
+int cutRod(vector<int> &price, int n)
 {
 	// Write your code here.
-	vector<int> cur (N+1,0);
-    
-    for(int i=0; i<=N; i++){
-        cur[i] = i*price[0];
+    return f(n-1,n,price);
+}
+
+// Approach-2 (Using DP)
+
+int f(int ind, int N, vector<int> &prices, vector<vector<int>> &dp){
+    if(ind==0){
+        return N*prices[0];
     }
-    
-    for(int ind=1; ind<N; ind++){
-        for(int length =0; length<=N; length++){
-        
-             int notTaken = 0 + cur[length];
-    
-             int taken = INT_MIN;
-             int rodLength = ind+1;
-             if(rodLength <= length)
-                taken = price[ind] + cur[length-rodLength];
-        
-             cur[length] = max(notTaken,taken);   
+    if(dp[ind][N]!=-1) return dp[ind][N];
+    int notTake = 0 + f(ind-1,N,prices,dp);
+    int Take = INT_MIN;
+    int rodLength = ind+1;
+    if(rodLength <= N) Take = prices[ind] + f(ind,N-rodLength,prices,dp);
+    return dp[ind][N]=max(notTake,Take);
+}
+int cutRod(vector<int> &price, int n)
+{
+	// Write your code here.
+    vector<vector<int>> dp(n,vector<int>(n+1,-1));
+    return f(n-1,n,price,dp);
+}
+
+// Approach-3 (Using Tabulation)
+
+int cutRod(vector<int> &prices, int n)
+{
+	// Write your code here.
+    vector<vector<int>> dp(n,vector<int>(n+1,0));
+    for(int N=0;N<=n;N++){
+        dp[0][N]= N*prices[0];
+    }
+    for(int ind=1;ind<n;ind++){
+        for(int N=0;N<=n;N++){
+            int notTake = 0 + dp[ind-1][N];
+            int Take = INT_MIN;
+            int rodLength = ind+1;
+            if(rodLength <= N) Take = prices[ind] + dp[ind][N-rodLength];
+            dp[ind][N]=max(notTake,Take);
         }
     }
-    
-    return cur[N];
+    return dp[n-1][n];
+}
+
+// Approach-4 (Space Optimisation Using 2 1D arrays In Tabulation)
+
+int cutRod(vector<int> &prices, int n)
+{
+	// Write your code here.
+    vector<int> prev(n+1,0),cur(n+1,0);
+    for(int N=0;N<=n;N++){
+        prev[N]= N*prices[0];
+    }
+    for(int ind=1;ind<n;ind++){
+        for(int N=0;N<=n;N++){
+            int notTake = 0 + prev[N];
+            int Take = INT_MIN;
+            int rodLength = ind+1;
+            if(rodLength <= N) Take = prices[ind] + cur[N-rodLength];
+            cur[N]=max(notTake,Take);
+        }
+        prev=cur;
+    }
+    return prev[n];
+}
+
+// Approach-5 (Space Optimisation Using 1 1D array In Tabulation)
+
+int cutRod(vector<int> &prices, int n)
+{
+	// Write your code here.
+    vector<int> prev(n+1,0);
+    for(int N=0;N<=n;N++){
+        prev[N]= N*prices[0];
+    }
+    for(int ind=1;ind<n;ind++){
+        for(int N=0;N<=n;N++){
+            int notTake = 0 + prev[N];
+            int Take = INT_MIN;
+            int rodLength = ind+1;
+            if(rodLength <= N) Take = prices[ind] + prev[N-rodLength];
+            prev[N]=max(notTake,Take);
+        }
+    }
+    return prev[n];
 }
