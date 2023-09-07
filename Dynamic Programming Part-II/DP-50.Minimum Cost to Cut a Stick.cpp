@@ -1,6 +1,8 @@
 #include <bits/stdc++.h> 
 using namespace std;
 
+// Approach-1 (Using Recursion)
+
 class Solution {
 public:
     int f(int i,int j, vector<int> &cuts){
@@ -20,6 +22,8 @@ public:
         return f(1,c,cuts);
     }
 };
+
+// Approach-2 (Using DP)
 
 class Solution {
 public:
@@ -42,6 +46,8 @@ public:
         return f(1,c,cuts,dp);
     }
 };
+
+// Approach-3 (Using Tabulation)
 
 int minCost(int n, vector<int>& cuts) {
         int c = cuts.size();
