@@ -2,33 +2,101 @@
 
 using namespace std;
 
+// Approach -1 (Using Recursion)
 class Solution {
 public:
-    bool inDict(string s,vector<string> wordDict){
-        for(int i=0;i<wordDict.size();i++){
-            if(s==wordDict[i]){
+    // To check any word in O(1) time
+    unordered_set<string> st;
+    int n;
+    bool solve(int idx,string s){
+        if(idx==n) return true;
+        if(st.find(s.substr(idx,n-idx))!=st.end()) return true;
+        for(int l=1;l<=n;l++){
+            if(l>n-idx) break;
+            if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && solve(idx+l,s)){
                 return true;
             }
         }
         return false;
     }
-    void solve(int ind,string s, vector<string> &ans,string str,vector<string> &wordDict){
-        if(ind==s.size()){
-            ans.push_back(str.substr(0,str.size()-1));
-            return;
+    bool wordBreak(string s, vector<string>& wordDict) {
+        n=s.size();
+        for(auto it : wordDict){
+            st.insert(it);
         }
-        for(int i=ind;i<s.size();i++){
-            if(inDict(s.substr(ind,i-ind+1),wordDict)){
-                str+=s.substr(ind,i-ind+1)+" ";
-                solve(i+1,s,ans,str,wordDict);
-                str.erase(str.size()-(i-ind+2));
+        return solve(0,s);
+    }
+};
+
+// Approach -2 (Using DP)
+
+class Solution {
+public:
+    // To check any word in O(1) time
+    unordered_set<string> st;
+    int n;
+    bool solve(int idx,string s,vector<int> &dp){
+        if(idx==n) return true;
+        if(dp[idx]!=-1) return dp[idx];
+        if(st.find(s.substr(idx,n-idx))!=st.end()) return true;
+        for(int l=1;l<=n;l++){
+            if(l>n-idx) break;
+            if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && solve(idx+l,s,dp)){
+                return dp[idx]=true;
             }
         }
+        return dp[idx]=false;
     }
-    vector<string> wordBreak(string s, vector<string>& wordDict) {
-     vector<string> ans;
-     string str="";
-     solve(0,s,ans,str,wordDict);
-     return ans;   
+    bool wordBreak(string s, vector<string>& wordDict) {
+        n=s.size();
+        for(auto it : wordDict){
+            st.insert(it);
+        }
+        vector<int> dp(n,-1);
+        return solve(0,s,dp);
+    }
+};
+
+// Approach -3 (Using Tabulation)
+
+class Solution {
+public:
+    // To check any word in O(1) time
+    unordered_set<string> st;
+    int n;
+    bool wordBreak(string s, vector<string>& wordDict) {
+        n=s.size();
+        for(auto it : wordDict){
+            st.insert(it);
+        }
+        vector<bool> dp(n+1,false);
+        dp[n]=true;
+        // Only this loop will also work instead of one given below
+        // for(int idx=n-1;idx>=0;idx--){
+        //     for(int l=1;l<=n;l++){
+        //         if(l>n-idx) break;
+        //         if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && dp[idx+l]){
+        //             dp[idx]=true;
+        //         }
+        //     }
+        // }
+        for(int idx=n-1;idx>=0;idx--){
+            int flag=0;
+            if(st.find(s.substr(idx,n-idx))!=st.end()){
+                flag=1;
+                dp[idx]= true;
+            } 
+            if(!flag){
+                for(int l=1;l<=n;l++){
+                    if(l>n-idx) break;
+                    if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && dp[idx+l]){
+                        flag=1;
+                        dp[idx]=true;
+                    }
+                }
+            }
+            if(!flag) dp[idx]=false;
+        }
+        return dp[0];
     }
 };
