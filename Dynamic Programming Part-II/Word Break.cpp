@@ -11,9 +11,8 @@ public:
     bool solve(int idx,string s){
         if(idx==n) return true;
         if(st.find(s.substr(idx,n-idx))!=st.end()) return true;
-        for(int l=1;l<=n;l++){
-            if(l>n-idx) break;
-            if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && solve(idx+l,s)){
+        for(int l=1;l<=n-idx;l++){
+            if(st.find(s.substr(idx,l))!=st.end() && solve(idx+l,s)){
                 return true;
             }
         }
@@ -39,9 +38,8 @@ public:
         if(idx==n) return true;
         if(dp[idx]!=-1) return dp[idx];
         if(st.find(s.substr(idx,n-idx))!=st.end()) return true;
-        for(int l=1;l<=n;l++){
-            if(l>n-idx) break;
-            if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && solve(idx+l,s,dp)){
+        for(int l=1;l<=n-idx;l++){
+            if(st.find(s.substr(idx,l))!=st.end() && solve(idx+l,s,dp)){
                 return dp[idx]=true;
             }
         }
@@ -73,9 +71,8 @@ public:
         dp[n]=true;
         // Only this loop will also work instead of one given below
         // for(int idx=n-1;idx>=0;idx--){
-        //     for(int l=1;l<=n;l++){
-        //         if(l>n-idx) break;
-        //         if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && dp[idx+l]){
+        //     for(int l=1;l<=n-idx;l++){
+        //         if(st.find(s.substr(idx,l))!=st.end() && dp[idx+l]){
         //             dp[idx]=true;
         //         }
         //     }
@@ -87,9 +84,8 @@ public:
                 dp[idx]= true;
             } 
             if(!flag){
-                for(int l=1;l<=n;l++){
-                    if(l>n-idx) break;
-                    if(l<=n-idx && st.find(s.substr(idx,l))!=st.end() && dp[idx+l]){
+                for(int l=1;l<=n-idx;l++){
+                    if(st.find(s.substr(idx,l))!=st.end() && dp[idx+l]){
                         flag=1;
                         dp[idx]=true;
                     }
