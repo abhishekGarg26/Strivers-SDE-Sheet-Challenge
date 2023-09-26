@@ -180,7 +180,7 @@ public:
                     int temp = 1+max(left,right);
                     if(left<right) lo = mid+1; // Since we want to maximise our attempts in worst case (i.e. value of temp),
                     // and worst case will only occur when we have less number of eggs then floors are more in number to explore,
-                    // so we need to increase the value of floors as value of right(incr. func of floors) will increase if value of mid will increase and 
+                    // so we need to increase the value of floors with less eggs as value of prev will increase if value of mid will increase and 
                     // value of mid will increase if value of "lo" will increase so that we can explore the worst possible cases.
                     else hi = mid - 1;
                     mn=min(mn,temp);
