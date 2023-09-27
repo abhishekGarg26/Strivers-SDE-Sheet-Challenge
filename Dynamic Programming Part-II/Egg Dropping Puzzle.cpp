@@ -193,3 +193,42 @@ public:
     }
 };
 
+// Optional Approach-1
+// For time, O(NK) decalre the space, O(KlogN) running,
+// For space, O(NK).
+
+int superEggDrop(int K, int N) {
+        vector<vector<int>> dp(N + 1, vector<int>(K + 1, 0));
+        int m = 0;
+        while (dp[m][K] < N) {
+            m++;
+            for (int k = 1; k <= K; ++k)
+                dp[m][k] = dp[m - 1][k - 1] + dp[m - 1][k] + 1;
+        }
+        return m;
+    }
+
+// Optional Approach -2 
+// O(1) space
+class Solution {
+public:
+	int superEggDrop(int k, int N) {
+		if (k == 1 || N<3) return N;
+		double n = log(N) / log(2);//n is the number of eggs we need when we do binary search
+        
+       // If the number of eggs is not enough to support our binary search, slowly increase the number of moves n until the return value of the fun function is greater than or equal to the target floor N
+		if (k < n++) 
+		    while (fun(k, n) < N) ++n;
+		return n;
+	}
+private: 
+    //In the worst case, the maximum number of floors that can be tested if the number of moves is n and the number of eggs is k
+	int fun(int k, int n) {
+		int i=1,temp = 1, maxNumOfF = 0;
+		while (i <= k) {
+			temp = temp*(n--) / (i++);
+			maxNumOfF += temp;
+		}
+		return maxNumOfF;
+	}
+};
