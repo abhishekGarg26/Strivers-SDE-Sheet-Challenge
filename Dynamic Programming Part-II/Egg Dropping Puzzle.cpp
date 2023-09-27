@@ -194,7 +194,7 @@ public:
 };
 
 // Optional Approach-1
-// For time, O(NK) decalre the space, O(KlogN) running,
+// Time : O(n * k) Worst case | O(k * log(n)) Avg Complexity
 // For space, O(NK).
 
 int superEggDrop(int K, int N) {
