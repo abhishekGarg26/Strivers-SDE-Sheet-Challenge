@@ -208,8 +208,29 @@ int superEggDrop(int K, int N) {
         return m;
     }
 
-// Optional Approach -2 
+// Optimal Approach - 2 
+
+int sol3(int k, int n)       //TC O(KlogN) Time, O(K) Space
+    {
+        int dp[k+1];
+        memset(dp,0,sizeof dp);
+
+        int i=0;
+        while(dp[k]<n)
+        {
+            for(int j=k;j>0;j--)
+            {
+                dp[j]+=dp[j-1]+1;
+            }
+            i++;
+        }
+        return i;
+    }
+
+// Optional Approach -3 
 // O(1) space
+// fun(k,n)=n + n(n-1)/2! + n(n-1)(n-2)/3! + …… + n(n-1)(n-2)……（n-k)/k!;
+
 class Solution {
 public:
 	int superEggDrop(int k, int N) {
